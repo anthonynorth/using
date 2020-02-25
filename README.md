@@ -18,8 +18,14 @@
 
 # Installation
 
-`remotes::install_github("anthonynorth/using@*release")`
+```r
+remotes::install_github("anthonynorth/using@*release")
+```
 
 # Usage
 
-`using(dplyr, min_version = "0.8.0")`
+```r
+using(capsule, repo = "https://github.com/milesmcbain/capsule")
+using(dplyr, min_version = "0.8.0")
+using(h3jsr, min_version = "1.0.0", max_version = "1.2.0", repo = "https://github.com/obrl-soil/h3jsr")
+```
