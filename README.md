@@ -1,4 +1,7 @@
 <p align="right">
+  <a href="https://github.com/anthonynorth/using/releases/latest">
+    <img src="https://img.shields.io/github/v/tag/anthonynorth/using?label=release&sort=semver" alt="release">
+  </a>
   <a href="https://www.tidyverse.org/lifecycle/#experimental">
     <img src="https://img.shields.io/badge/lifecycle-experimental-orange.svg" alt="lifecycle" />
   </a>
