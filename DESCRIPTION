@@ -1,7 +1,7 @@
 Package: using
 Type: Package
 Title: Add version constraints to library() calls
-Version: 0.1.0.9000
+Version: 0.2.0
 Authors@R:
     person(given = "Anthony", family = "North", role = c("aut", "cre"), email = "anthony.jl.north@gmai.com")
 Description: Add version constraints to library() calls
