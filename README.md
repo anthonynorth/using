@@ -16,13 +16,13 @@
   Add optional version constraints to <code>library</code> calls
 </p>
 
-# Installation
+## Installation
 
 ```r
 remotes::install_github("anthonynorth/using@*release")
 ```
 
-# Usage
+## Usage
 
 ```r
 using(capsule)
