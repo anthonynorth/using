@@ -25,7 +25,7 @@ remotes::install_github("anthonynorth/using@*release")
 # Usage
 
 ```r
-using(capsule, repo = "https://github.com/milesmcbain/capsule")
+using(capsule)
 using(dplyr, min_version = "0.8.0")
-using(h3jsr, min_version = "1.0.0", max_version = "1.2.0", repo = "https://github.com/obrl-soil/h3jsr")
+using(h3jsr, min_version = "1.0.0", repo = "https://github.com/obrl-soil/h3jsr")
 ```

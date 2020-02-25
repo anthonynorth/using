@@ -4,14 +4,12 @@
 \alias{using}
 \title{using}
 \usage{
-using(package, min_version = NULL, max_version = NULL, repo = NULL, ...)
+using(package, min_version = NULL, repo = NULL, ...)
 }
 \arguments{
 \item{package}{\code{{character | name}} package name}
 
 \item{min_version}{\code{{package_version | character}} min package version}
-
-\item{max_version}{\code{{package_version | character}} max package version}
 
 \item{repo}{\code{{character}} repo url}
 
@@ -26,9 +24,9 @@ Optionally add version constraints to library calls
 }
 \examples{
 \dontrun{
-using(magrittr)
+using(capsule)
+using(dplyr, min_version = "0.8.0")
 using(h3jsr, min_version = "1.0.0", repo = "https://github.com/obrl-soil/h3jsr")
-using("rlang", max_version = "0.4.0")
 }
 
 }
