@@ -15,3 +15,11 @@
 <p align="center">
   Add optional version constraints to <code>library</code> calls
 </p>
+
+# Installation
+
+`remotes::install_github("anthonynorth/using@*release")`
+
+# Usage
+
+`using(dplyr, min_version = "0.8.0")`
