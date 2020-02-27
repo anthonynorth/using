@@ -22,8 +22,10 @@ using <- function(package,
                   min_version = NULL,
                   repo = NULL,
                   ...) {
+
   package <- deparse(substitute(package))
-  require(package, character.only = TRUE, quietly = TRUE)
+  package_installed <- require(package, character.only = TRUE, quietly = TRUE)
+  version_satisfied <- TRUE
 
   stopifnot(
     is.null(min_version) || inherits(
@@ -32,9 +34,19 @@ using <- function(package,
     is.null(repo) || inherits(repo, "character")
   )
 
-  version <- utils::packageVersion(package)
+  if (package_installed && !is.null(min_version)) {
+    version_satisfied <-
+      utils::compareVersion(utils::packageVersion(package), min_version) >= 0
+  }
 
-  if (!is.null(min_version) && version < min_version) {
+  if ((!package_installed | !version_satisfied) && interactive() && prompt_install()) {
+    using_install_package(package, min_version, repo)
+      version_satisfied <- TRUE
+      package_installed <- TRUE
+  }
+  
+
+  if (!version_satisfied || !package_installed) {
     error_message <- paste0(
       "package '", package, "' version < ", min_version,
       if (!is.null(repo)) paste0("\n  repo: ", repo)
