@@ -18,38 +18,47 @@
 #'
 #' @md
 #' @export
-using <- function(package,
-                  min_version = NULL,
-                  repo = NULL,
-                  ...) {
+using <- function(
+  package,
+  min_version = NULL,
+  repo = NULL,
+  ...
+) {
 
   package <- deparse(substitute(package))
-  package_installed <- require(package, character.only = TRUE, quietly = TRUE)
+  package_installed <- requireNamespace(package, quietly = TRUE)
   version_satisfied <- TRUE
 
   stopifnot(
     is.null(min_version) || inherits(
-      min_version, c("character", "package_version")
+      min_version,
+      c("character", "package_version")
     ),
     is.null(repo) || inherits(repo, "character")
   )
 
   if (package_installed && !is.null(min_version)) {
     version_satisfied <-
-      utils::compareVersion(utils::packageVersion(package), min_version) >= 0
+      utils::compareVersion(
+        as.character(utils::packageVersion(package)),
+        min_version
+      ) >= 0
   }
 
-  if ((!package_installed | !version_satisfied) && interactive() && prompt_install()) {
+  if ((!package_installed | !version_satisfied) && interactive() &&
+    prompt_install(package)) {
     using_install_package(package, min_version, repo)
-      version_satisfied <- TRUE
-      package_installed <- TRUE
+    version_satisfied <- TRUE
+    package_installed <- TRUE
   }
-  
+
 
   if (!version_satisfied || !package_installed) {
     error_message <- paste0(
-      "package '", package, "' version < ", min_version,
-      if (!is.null(repo)) paste0("\n  repo: ", repo)
+      "Could not satisfy dependency '",
+      package,
+      if (!is.null(version)) paste0("' with version >= ", min_version),
+      if (!is.null(repo)) paste0(" from repo ", repo)
     )
     stop(error_message)
   }
@@ -62,5 +71,6 @@ using <- function(package,
     list(...)
   )
 
-  do.call(library, params)
+  do.call(library, params, envir = .GlobalEnv)
+
 }

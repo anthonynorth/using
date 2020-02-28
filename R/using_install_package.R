@@ -1,15 +1,4 @@
-##' .. content for \description{} (no empty lines) ..
-##'
-##' .. content for \details{} ..
-##'
-##' @title
-##' @param package
-##' @param min_version
-##' @param repo
-##' @return
-##' @author Miles McBain
-##' @export
-using_install_package <- function(package, min_version, repo = NULL) {
+using_install_package <- function(package, min_version = NULL, repo = NULL) {
 
   repo <-
     ifelse(
@@ -27,11 +16,11 @@ using_install_package <- function(package, min_version, repo = NULL) {
 
   if (!version_satisfied) {
     stop(
-      "could not a install",
+      "Could not install ",
       package,
-      "version",
+      " version ",
       min_version,
-      "or greater from",
+      " or greater from ",
       repo
     )
   }
@@ -40,8 +29,8 @@ using_install_package <- function(package, min_version, repo = NULL) {
 
 using_install_cran <- function(package, min_version) {
 
-  if (is_satisfiable_cran) {
-    install.packages(package)
+  if (is_satisfiable_cran(package, min_version)) {
+    utils::install.packages(package)
     TRUE
   }
   else {
@@ -52,11 +41,19 @@ using_install_cran <- function(package, min_version) {
 
 is_satisfiable_cran <- function(package, min_version) {
 
+  ## if no version specified set to absolute min
+  min_version <- ifelse(is.null(min_version),
+                        "0.0.0",
+                        min_version)
+
   available_packages <-
     as.data.frame(utils::available.packages(), stringsAsFactors = FALSE)
 
+
   cran_version <-
     available_packages[available_packages$Package == package, ]$Version
+
+  if (length(cran_version) == 0) return(FALSE)
 
   utils::compareVersion(cran_version, min_version) >= 0
 
@@ -68,6 +65,9 @@ using_install_git <- function(package, min_version, repo) {
   random_dir <- uuid::UUIDgenerate()
   pkg_dir <- file.path(temp_dir, random_dir)
   dir.create(pkg_dir)
+  on.exit(unlink(pkg_dir, recursive = TRUE))
+
+
 
   system2(
     "git",
@@ -87,13 +87,25 @@ using_install_git <- function(package, min_version, repo) {
   ## documenting dependencies
   add_remote_meta(package, repo)
 
-  unlink(pkg_fir, recursive = TRUE)
-
   TRUE
 }
 
-## code taken from r-lib/remotes and modified
-## is gpl2 copyright holder is RStudio
+get_pkg_path <- function(package) {
+
+  rds_path <- attr(utils::packageDescription(package), "file")
+  pkg_path <- paste0(
+    strsplit(rds_path, package)[[1]][1],
+    package
+  )
+  pkg_path
+
+}
+
+## Code below is taken from package {remotes} (https://github.com/r-lib/remotes)
+## and modified.
+## The code has license is GPL >= 2
+## Copyright holders are RStudio and Mango Solutions.
+
 add_remote_meta <- function(package, repo) {
 
   pkg_path <- get_pkg_path(package)
@@ -120,15 +132,4 @@ add_remote_meta <- function(package, repo) {
     )
     base::saveRDS(pkg_desc, binary_desc)
   }
-}
-
-get_pkg_path <- function(package) {
-
-  rds_path <- attr(packageDescription(package), "file")
-  pkg_path <- paste0(
-    strsplit(rds_path, package)[[1]][1],
-    package
-  )
-  pkg_path
-
 }
