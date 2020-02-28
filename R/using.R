@@ -45,7 +45,7 @@ using <- function(
       ) >= 0
   }
 
-  if ((!package_installed | !version_satisfied) && interactive() &&
+  if ((!package_installed || !version_satisfied) && interactive() &&
     prompt_install(package)) {
     using_install_package(package, min_version, repo)
     version_satisfied <- TRUE
