@@ -14,7 +14,7 @@
 
 <p align="center">
   Add version constraints and remote git repositories to <code>library()</code> calls. 
-  In interactive mode a the user is prompted to install.
+  In interactive mode the user is prompted to install.
 </p>
 
 ## Installation
