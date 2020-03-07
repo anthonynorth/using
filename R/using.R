@@ -16,15 +16,8 @@
 #' using(h3jsr, min_version = "1.0.0", repo = "https://github.com/obrl-soil/h3jsr")
 #' }
 #'
-#' @md
 #' @export
-using <- function(
-  package,
-  min_version = NULL,
-  repo = NULL,
-  ...
-) {
-
+using <- function(package, min_version = NULL, repo = NULL, ...) {
   package <- deparse(substitute(package))
   package_installed <- requireNamespace(package, quietly = TRUE)
   version_satisfied <- TRUE
@@ -72,5 +65,4 @@ using <- function(
   )
 
   do.call(library, params, envir = .GlobalEnv)
-
 }
