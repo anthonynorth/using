@@ -25,8 +25,26 @@ remotes::install_github("anthonynorth/using@*release")
 
 ## Usage
 
+Using is intended for use without being attached via `library(using)`. This
+helps with detecting dependency declarations for [`capsule`](https://github.com/milesmcbain/capsule) or [`renv`](https://github.com/rstudio/renv/).
+
 ```r
-using(capsule)
-using(dplyr, min_version = "0.8.0")
-using(h3jsr, min_version = "1.0.0", repo = "https://github.com/obrl-soil/h3jsr")
+using::pkg(capsule)
+using::pkg(dplyr, min_version = "0.8.0")
+using::pkg(h3jsr, min_version = "1.0.0", repo = "https://github.com/obrl-soil/h3jsr")
+```
+
+## Interactive use
+
+In interactive sessions the user will be prompted to install a qualifying version of the package if one can be found at `repo` or CRAN if repo is missing. 
+
+```
+> using::pkg("rdeck", min_version = "0.2.5", repo = "http://github.com/anthonynorth/rdeck")
+A suitable version of package {"rdeck"} was not found. Would you like to install now? 
+
+1: yes
+2: no
+
+Selection: 1
+Cloning into 'C:\Users\msmcbain\AppData\Local\Temp\RtmpgduuhY/3327d724-3531-412e-b21b-c7a1621e13d7'...
 ```
