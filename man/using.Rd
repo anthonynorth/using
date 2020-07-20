@@ -4,16 +4,10 @@
 \alias{using}
 \title{using}
 \usage{
-using(package, min_version = NULL, repo = NULL, ...)
+using(...)
 }
 \arguments{
-\item{package}{\code{{character | name}} package name}
-
-\item{min_version}{\code{{package_version | character}} min package version}
-
-\item{repo}{\code{{character}} repo url}
-
-\item{...}{additional arguments to pass to \code{\link[base:library]{base::library()}}}
+\item{...}{arguments to pass to \code{\link[using:pkg]{using::pkg()}}}
 }
 \value{
 \code{{character | logical}}
@@ -22,11 +16,14 @@ attached packages, or boolean if \verb{logical.return is TRUE}
 \description{
 Optionally add version constraints to library calls
 }
+\details{
+This is function is deprecated. See \code{\link[using:pkg]{using::pkg()}}.
+}
 \examples{
 \dontrun{
-using(capsule)
-using(dplyr, min_version = "0.8.0")
-using(h3jsr, min_version = "1.0.0", repo = "https://github.com/obrl-soil/h3jsr")
+using::pkg(capsule)
+using::pkg(dplyr, min_version = "0.8.0")
+using::pkg(h3jsr, min_version = "1.0.0", repo = "https://github.com/obrl-soil/h3jsr")
 }
 
 }
