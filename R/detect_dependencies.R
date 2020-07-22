@@ -31,38 +31,42 @@ detect_dependencies <- function(file_path) {
     tolower(
       regmatches(
         file_path,
-        regexpr("\\.[A-Za-z0-9]{1,3}$", file_path)))
+        regexpr("\\.[A-Za-z0-9]{1,3}$", file_path)
+      )
+    )
 
   if (!(file_type %in% c(".r", ".rmd"))) stop("detect_dependencies only supported for .R and .Rmd")
 
   deps <- switch(file_type,
-                 .r = parse_detect_deps(file_path, parse),
-                 .rmd = parse_detect_deps(file_path, parse_rmd),
-                 NULL)
+    .r = parse_detect_deps(file_path, parse),
+    .rmd = parse_detect_deps(file_path, parse_rmd),
+    NULL
+  )
 
   deps[!duplicated(deps), ]
 }
 
 parse_detect_deps <- function(file_path, file_parser) {
-
   syntax_tree <- tryCatch(file_parser(file = file_path),
-    error = function(e) stop("Could not detect usage of using::pkg in due to invalid R code. The parser returned: \n", e$message))
+    error = function(e) stop("Could not detect usage of using::pkg in due to invalid R code. The parser returned: \n", e$message)
+  )
 
   get_using(syntax_tree)
 }
 
 parse_rmd <- function(file_path) {
-
-  R_temp <- tempfile(fileext=".R")
+  R_temp <- tempfile(fileext = ".R")
   on.exit(unlink(R_temp))
 
-  withr::with_options(list(knitr.purl.inline = TRUE),
-                      knitr::purl(file_path,
-                                  output = R_temp,
-                                  quiet = TRUE))
-                      
-  parse(file = R_temp)
+  withr::with_options(
+    list(knitr.purl.inline = TRUE),
+    knitr::purl(file_path,
+      output = R_temp,
+      quiet = TRUE
+    )
+  )
 
+  parse(file = R_temp)
 }
 
 
@@ -79,46 +83,53 @@ is_using_node <- function(ast_node) {
 extract_using_data <- function(ast_node) {
   node_list <- as.list(ast_node)
   node_list <- node_list[-1]
-  char_nodes <- stats::setNames(lapply(node_list, as.character),
-                         names(node_list))
+  char_nodes <- stats::setNames(
+    lapply(node_list, as.character),
+    names(node_list)
+  )
 
 
   do.call(
     function(package = NA_character_,
              min_version = NA_character_,
              repo = NA_character_) {
-      data.frame(package = package,
-                 min_version = min_version,
-                 repo = repo,
-                 stringsAsFactors = FALSE)
+      data.frame(
+        package = package,
+        min_version = min_version,
+        repo = repo,
+        stringsAsFactors = FALSE
+      )
     },
-    char_nodes)
-
+    char_nodes
+  )
 }
 
 get_using <- function(syntax_tree) {
-
   get_using_recurse <- function(syntax_tree_expr) {
     if (is.call(syntax_tree_expr)) {
-      if (is_using_node(syntax_tree_expr))
+      if (is_using_node(syntax_tree_expr)) {
         return(extract_using_data(syntax_tree_expr))
-      else
+      } else {
         make_data_frame(lapply(syntax_tree_expr, get_using_recurse))
+      }
     } else {
       return(NULL)
     }
   }
 
   make_data_frame(lapply(syntax_tree, get_using_recurse))
-
 }
 
-make_data_frame <- function(x)
-{
-  result_dfs <- x[!unlist(lapply(x,is.null))]
+make_data_frame <- function(x) {
+  result_dfs <- x[!unlist(lapply(x, is.null))]
 
-  if (length(result_dfs) > 0) do.call(rbind, c(result_dfs, stringsAsFactors = FALSE))
-  else data.frame(package = character(0),
-                  min_version = character(0),
-                  repo = character(0), stringsAsFactors = FALSE)
+  if (length(result_dfs) > 0) {
+    do.call(rbind, c(result_dfs, stringsAsFactors = FALSE))
+  } else {
+    data.frame(
+      package = character(0),
+      min_version = character(0),
+      repo = character(0), stringsAsFactors = FALSE
+    )
+  }
 }
