@@ -17,13 +17,13 @@ pkg(package, min_version = NULL, repo = NULL, ...)
 }
 \value{
 \code{{character | logical}}
-attached packages, or boolean if \verb{logical.return is TRUE}
+attached packages, or boolean if \code{logical.return is TRUE}
 }
 \description{
 Optionally add version constraints to library calls
 }
 \details{
-This function is intended to always be called with the \verb{using::} prefix. A
+This function is intended to always be called with the \code{using::} prefix. A
 call without this prefix will throw a warning. This simplifies detecting
 dependencies declared by using::pkg for use with \code{{renv}} and \code{{capsule}}
 }

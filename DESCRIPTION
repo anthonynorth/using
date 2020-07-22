@@ -19,4 +19,8 @@ Depends: R (>= 3.3.0)
 Imports:
     utils,
     uuid,
-    remotes
+    remotes,
+    knitr,
+    stats
+Suggests: 
+    testthat (>= 2.1.0)
