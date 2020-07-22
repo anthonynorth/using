@@ -1,7 +1,7 @@
 Package: using
 Type: Package
 Title: Add version constraints to library() calls
-Version: 0.3.0
+Version: 0.4.0
 Authors@R: c(
     person(given = "Anthony", family = "North", role = c("aut", "cre"), email = "anthony.jl.north@gmail.com"),
     person(given = "Miles", family = "McBain", role = c("aut"), email = "miles.mcbain@gmail.com"),
@@ -19,4 +19,9 @@ Depends: R (>= 3.3.0)
 Imports:
     utils,
     uuid,
-    remotes
+    remotes,
+    knitr,
+    stats,
+    withr
+Suggests: 
+    testthat (>= 2.1.0)

@@ -11,7 +11,7 @@ using(...)
 }
 \value{
 \code{{character | logical}}
-attached packages, or boolean if \verb{logical.return is TRUE}
+attached packages, or boolean if \code{logical.return is TRUE}
 }
 \description{
 Optionally add version constraints to library calls

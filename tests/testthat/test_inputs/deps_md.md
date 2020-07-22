@@ -1,0 +1,8 @@
+using::pkg(qfes, min_version = "0.2.1", repo = "https://github.com/qfes/qfes.git")
+using::pkg(ffdi, min_version = "0.1.3", repo = "https://qfes@dev.azure.com/qfes/packages/_git/ffdi")
+using::pkg(datapasta, repo = "https://github.com/milesmcbain/datapasta")
+withr::with_libpaths(new = "foo/path",
+                     code = using::pkg(slippymath, min_version = "0.1.0"))
+library(geosphere) # to get the distance between stations
+library(concaveman)
+library(english)
