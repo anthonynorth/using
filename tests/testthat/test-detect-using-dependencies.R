@@ -5,18 +5,19 @@ test_that("detecting using works", {
 
   expect_equal(
     rmd_deps$package,
-    c("qfes", "ffdi", "datapasta", "slippymath"))
+    c("qfes", "ffdi", "datapasta", "slippymath", "rdeck"))
 
   expect_equal(
     rmd_deps$min_version,
-    c("0.2.1", "0.1.3", NA, "0.1.0"))
+    c("0.2.1", "0.1.3", NA, "0.1.0", "0.2.5"))
 
   expect_equal(
     rmd_deps$repo,
     c("https://github.com/qfes/qfes.git",
       "https://qfes@dev.azure.com/qfes/packages/_git/ffdi",
       "https://github.com/milesmcbain/datapasta",
-      NA))
+      NA,
+      "https://github.com/anthonynorth/rdeck"))
 
   ## test R
   r_deps <- detect_dependencies(test_path("test_inputs/deps_using.R"))

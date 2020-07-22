@@ -17,10 +17,6 @@
 ##' substitution is done. So using(janitor, min_version = janitor_ver) would
 ##' place "janitor_ver" in the min_row column of the result for this dependency.
 ##'
-##' With .Rmd files, source code declared inline with single backticks and
-##' "r" prefix is not parsed. Call using::pkg inside a code chunk if you want it
-##' to be detected.
-##'
 ##' @title detect_dependencies
 ##' @param file_path a length 1 character vector file path to an .R or .Rmd file
 ##' @return a data.frame summarising found using::pkg calls in the supplied file.
@@ -60,10 +56,11 @@ parse_rmd <- function(file_path) {
   R_temp <- tempfile(fileext=".R")
   on.exit(unlink(R_temp))
 
-  knitr::purl(file_path,
-              output = R_temp,
-              quiet = TRUE)
-
+  withr::with_options(list(knitr.purl.inline = TRUE),
+                      knitr::purl(file_path,
+                                  output = R_temp,
+                                  quiet = TRUE))
+                      
   parse(file = R_temp)
 
 }

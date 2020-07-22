@@ -23,7 +23,7 @@ library(english)
 ```
 
 
-`r using(rdeck, min_version = "0.2.5", repo = "https://github.com/anthonynorth/rdeck")`
+`r using::pkg(rdeck, min_version = "0.2.5", repo = "https://github.com/anthonynorth/rdeck")`
 
 ## Reproducibility
 
