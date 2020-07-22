@@ -32,10 +32,6 @@ min_version.
 Each using::pkg call is parsed based on it's literal expression and no variable
 substitution is done. So using(janitor, min_version = janitor_ver) would
 place "janitor_ver" in the min_row column of the result for this dependency.
-
-With .Rmd files, source code declared inline with single backticks and
-"r" prefix is not parsed. Call using::pkg inside a code chunk if you want it
-to be detected.
 }
 \author{
 Miles McBain
