@@ -35,7 +35,7 @@ detect_dependencies <- function(file_path) {
       )
     )
 
-  if (!(file_type %in% c(".r", ".rmd"))) stop("detect_dependencies only supported for .R and .Rmd")
+  if (!(file_type %in% c(".r", ".rmd", ".qmd"))) stop("detect_dependencies only supported for .R and .Rmd")
 
   deps <- switch(file_type,
     .r = parse_detect_deps(file_path, parse),
